@@ -4,7 +4,7 @@ services:
   fastapi_server:
     image: fastapi_image1
     build:
-      context: ./app/
+      context: ./fastapi_app/
       dockerfile: Dockerfile
     ports:
     - "80:80"
