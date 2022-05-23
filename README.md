@@ -1,0 +1,1 @@
+# opentelemetry-grafana-agent-tail-based-sampling
