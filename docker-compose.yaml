@@ -9,3 +9,15 @@ services:
     ports:
     - "80:80"
 
+  grafana_tempo:
+    image: grafana/tempo:latest
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./grafana_tempo/tempo-local.yaml:/etc/tempo.yaml
+      - ./grafana_tempo/tempo-data:/tmp/tempo
+    ports:
+      # - "14268:14268"  # jaeger ingest
+      # - "3200:3200"   # tempo
+      - "4317:4317"  # otlp grpc
+      # - "4318:4318"  # otlp http
+      # - "9411:9411"   # zipkin
