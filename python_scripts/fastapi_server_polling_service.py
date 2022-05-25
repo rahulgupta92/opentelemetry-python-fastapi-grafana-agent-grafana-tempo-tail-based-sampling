@@ -6,14 +6,13 @@ from opentelemetry import trace
 # from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import \
     OTLPSpanExporter
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.instrumentation.urllib import URLLibInstrumentor  # type: ignore
 
 # Used by requests library
-URLLibInstrumentor().instrument()
-
+RequestsInstrumentor().instrument()
 
 resource = Resource(attributes={"service.name": "fastapi_server_polling_service"})
 
@@ -28,7 +27,7 @@ tracer = trace.get_tracer(__name__)
 
 def poll_fastapi_server():
     while True:
-        with tracer.start_as_current_span('send_request_to_server') as span:
+        with tracer.start_as_current_span("send_request_to_server") as span:
             number1 = randint(1, 100)
             number2 = randint(0, 5)
             print(number1, number2)
@@ -39,7 +38,8 @@ def poll_fastapi_server():
             url = f"http://fastapi_server/divide/?number1={number1}&number2={number2}"
 
             response = requests.get(url)
-            sleep(5)
+
+            sleep(10)
 
 
 if __name__ == "__main__":

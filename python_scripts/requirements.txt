@@ -3,5 +3,5 @@ isort==5.10.1
 mypy==0.950
 opentelemetry-api==1.11.1
 opentelemetry-exporter-otlp==1.11.1
-opentelemetry-instrumentation-urllib==0.30b1
+opentelemetry-instrumentation-requests==0.30b1
 opentelemetry-sdk==1.11.1
