@@ -1,8 +1,8 @@
+from time import sleep
 from typing import Union
 
 from fastapi import FastAPI, Request
 from opentelemetry import trace
-# from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import \
     OTLPSpanExporter
 from opentelemetry.instrumentation.fastapi import \
@@ -37,7 +37,6 @@ def index():
 
 @app.get("/divide/")
 def division(request: Request, number1: int, number2: int):
-    print("headers----", request.headers)
     with tracer.start_as_current_span("divide_numbers") as span:
 
         print(span.get_span_context())
@@ -46,6 +45,9 @@ def division(request: Request, number1: int, number2: int):
         span.set_attribute("number2", number2)
 
         result = number1 / number2
+
+        if number2 == 1:
+            sleep(5)
 
         span.set_attribute("result", result)
 

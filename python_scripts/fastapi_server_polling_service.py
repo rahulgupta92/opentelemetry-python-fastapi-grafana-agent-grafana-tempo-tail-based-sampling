@@ -26,11 +26,16 @@ tracer = trace.get_tracer(__name__)
 
 
 def poll_fastapi_server():
+    all_traces = 0
+    traces_sampled = 0
+    latency_sampled_traces = 0
+    error_span_sampled_traces = 0
+
     while True:
         with tracer.start_as_current_span("send_request_to_server") as span:
             number1 = randint(1, 100)
-            number2 = randint(0, 5)
-            print(number1, number2)
+            number2 = randint(0, 3)
+
 
             span.set_attribute("number1", number1)
             span.set_attribute("number2", number2)
@@ -39,7 +44,18 @@ def poll_fastapi_server():
 
             response = requests.get(url)
 
-            sleep(10)
+            # Compute stats
+            all_traces += 1
+            if number2 == 0:
+                error_span_sampled_traces += 1
+                traces_sampled += 1
+            elif number2 == 1:
+                latency_sampled_traces += 1
+                traces_sampled += 1
+            print(f"Trace Sampling Stats as of now: All Traces: {all_traces} Sampled Traces: {traces_sampled} Latency sampled traces: {latency_sampled_traces} Error Span Sampled Traces: {error_span_sampled_traces}")
+
+
+        sleep(2)
 
 
 if __name__ == "__main__":
