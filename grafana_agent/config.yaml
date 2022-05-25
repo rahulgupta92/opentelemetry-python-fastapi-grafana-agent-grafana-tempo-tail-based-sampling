@@ -18,3 +18,12 @@ traces:
       backend: stdout
       roots: true
 
+    tail_sampling:
+      policies:
+        - status_code:
+            status_codes:
+              - ERROR
+
+        - latency:
+            threshold_ms: 4000
+
