@@ -32,12 +32,19 @@ tracer = trace.get_tracer(__name__)
 def index():
     with tracer.start_as_current_span("foo") as span:
         print(span.get_span_context())
-        print(span.parent.trace_id)
-        print(span.get_span_context().trace_id)
-        print("Hello world!")
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/divide/")
+def division(number1: int, number2: int):
+    with tracer.start_as_current_span("divide_numbers") as span:
+            print(span.get_span_context())
+
+            span.set_attribute("number1", number1)
+            span.set_attribute("number2", number2)
+
+            result = number1 / number2
+
+            span.set_attribute("result", result)
+
+    return {"result": result}

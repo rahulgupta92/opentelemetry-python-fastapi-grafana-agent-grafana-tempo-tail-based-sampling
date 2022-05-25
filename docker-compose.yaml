@@ -34,7 +34,7 @@ services:
       - ./grafana_tempo/tempo-local.yaml:/etc/tempo.yaml
 
   fastapi_server:
-    image: fastapi_image1
+    image: fastapi_server_image
     build:
       context: ./fastapi_app/
       dockerfile: Dockerfile
@@ -43,3 +43,11 @@ services:
     depends_on:
       - tempo
       - loki
+
+  fastapi_server_polling_service:
+    image: fastapi_server_polling_service_image
+    build:
+      context: ./python_scripts/
+      dockerfile: Dockerfile
+    depends_on:
+      - fastapi_server
