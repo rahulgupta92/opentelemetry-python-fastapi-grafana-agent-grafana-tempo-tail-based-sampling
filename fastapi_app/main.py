@@ -2,13 +2,14 @@ from typing import Union
 
 from fastapi import FastAPI
 from opentelemetry import trace
-
 # from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import \
+    OTLPSpanExporter
+from opentelemetry.instrumentation.fastapi import \
+    FastAPIInstrumentor  # type:ignore
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor  # type:ignore
 
 app = FastAPI()
 FastAPIInstrumentor.instrument_app(app)
