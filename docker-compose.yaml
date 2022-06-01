@@ -10,6 +10,13 @@ services:
     volumes:
       - "./grafana_agent/config.yaml:/etc/agent/agent.yaml"
 
+  agent2:
+    image: grafana/agent:main
+    ports:
+      - "4428:4318"
+    volumes:
+      - "./grafana_agent2/config.yaml:/etc/agent/agent.yaml"
+
   grafana:
     image: grafana/grafana
     volumes:
@@ -51,3 +58,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - fastapi_server
+
+  python_service2:
+    image: python_service2_image
+    build:
+      context: ./python_service2/
+      dockerfile: Dockerfile

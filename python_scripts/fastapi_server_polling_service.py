@@ -14,7 +14,8 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 # Used by requests library
 RequestsInstrumentor().instrument()
 
-resource = Resource(attributes={"service.name": "fastapi_server_polling_service"})
+# resource = Resource(attributes={"service.name": "fastapi_server_polling_service"})
+resource = Resource(attributes={"service.name": "fastapi2_server_polling_service"})
 
 trace.set_tracer_provider(TracerProvider(resource=resource))
 endpoint = "http://agent:4318/v1/traces"
@@ -33,6 +34,7 @@ def poll_fastapi_server():
 
     while True:
         with tracer.start_as_current_span("send_request_to_server") as span:
+            sleep(1) # add delay of 1s to simulate some computation
             number1 = randint(1, 100)
             number2 = randint(0, 3)
 
@@ -55,7 +57,9 @@ def poll_fastapi_server():
             print(f"Trace Sampling Stats as of now: All Traces: {all_traces} Sampled Traces: {traces_sampled} Latency sampled traces: {latency_sampled_traces} Error Span Sampled Traces: {error_span_sampled_traces}")
 
 
+        # send new request with delay of 2s
         sleep(2)
+
 
 
 if __name__ == "__main__":

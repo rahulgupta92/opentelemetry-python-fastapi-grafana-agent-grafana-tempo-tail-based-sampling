@@ -20,10 +20,116 @@ traces:
 
     tail_sampling:
       policies:
-        - status_code:
-            status_codes:
-              - ERROR
+      - latency:
+          threshold_ms: 3000
 
-        - latency:
-            threshold_ms: 4000
+      #   - and:
+      #       and_sub_policy:
+
+      #       - name: and_tag_policy
+      #         type: string_attribute
+      #         string_attribute:
+      #           key: "service.name"
+      #           values:
+      #             # - "fastapi_server_polling_service"
+      #             - "fastapi2_server_polling_service"
+      #           # invert_match: true
+
+            # - name: and_latency_policy
+            #   type: latency
+            #   latency:
+            #     threshold_ms: 3000
+
+            # - name: and_tag_policy
+            #   type: string_attribute
+            #   string_attribute:
+            #     key: "span.kind"
+            #     values:
+            #         - "internal"
+
+            # - name: and_error_policy
+            #   type: status_code
+            #   status_code:
+            #     status_codes:
+            #       - ERROR
+
+            # - name: and_numeric_policy
+            #   type: numeric_attribute
+            #   numeric_attribute:
+            #     key: number1
+            #     min_value: 30
+            #     max_value: 70
+
+
+        # - and:
+        #     and_sub_policy:
+
+        #     - name: and_tag_policy
+        #       type: string_attribute
+        #       string_attribute:
+        #         key: "service.name"
+        #         values:
+        #           # - "fastapi_server_polling_service"
+        #           - "some_python_service"
+                # enabled_regex_matching: true
+                # invert_match: true
+
+            # - name: and_latency_policy
+            #   type: latency
+            #   latency:
+            #     threshold_ms: 3000
+
+            # - name: and_tag_policy
+            #   type: string_attribute
+            #   string_attribute:
+            #     key: "span.kind"
+            #     values:
+            #         - "internal"
+
+            # - name: and_error_policy
+            #   type: status_code
+            #   status_code:
+            #     status_codes:
+            #       - ERROR
+
+            # - name: and_numeric_policy
+            #   type: numeric_attribute
+            #   numeric_attribute:
+            #     key: number1
+            #     min_value: 30
+            #     max_value: 70
+
+        # - and:
+        #     and_sub_policy:
+        #     # - type: string_attribute
+        #     #   string_attribute:
+        #     #     key: service.name
+        #     #     values:
+        #     #         - "fastapi_server"
+
+        #     - latency:
+        #         threshold_ms: 3000
+        # - status_code:
+        #     status_codes:
+        #       - ERROR
+
+        # - latency:
+        #     threshold_ms: 3
+
+        # - numeric_attribute:
+        #     key: number1
+        #     min_value: 30
+        #     max_value: 70
+
+        # - string_attribute:
+        #       key: "dont_sample"
+        #       values:
+        #         - "yes"
+        #       invert_match: true
+        # - string_attribute:
+        #       key: "service.name"
+        #       values:
+        #         - "fastapi_server_polling_service"
+        #       invert_match: true
+
 

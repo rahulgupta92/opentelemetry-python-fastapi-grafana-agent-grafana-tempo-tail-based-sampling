@@ -37,6 +37,7 @@ def index():
 
 @app.get("/divide/")
 def division(request: Request, number1: int, number2: int):
+    print('---headers---', request.headers)
     with tracer.start_as_current_span("divide_numbers") as span:
 
         print(span.get_span_context())
@@ -47,8 +48,13 @@ def division(request: Request, number1: int, number2: int):
         result = number1 / number2
 
         if number2 == 1:
-            sleep(5)
+            sleep(3)
+        else:
+            sleep(1) # add delay of 1s to simulate some computation
 
         span.set_attribute("result", result)
+
+        if number2 == 3:
+            span.set_attribute('dont_sample', 'yes')
 
     return {"result": result}
