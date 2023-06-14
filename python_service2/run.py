@@ -33,7 +33,7 @@ def generate_self_trace():
             if number > 150:
                 sleep(3)
 
-                number1 = randint(200, 300)
+                number1 = randint(200, 400)
                 number2 = randint(0, 1)
 
 
